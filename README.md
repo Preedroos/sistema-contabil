@@ -1,12 +1,48 @@
-# React + Vite
+# Sistema de Rotinas Administrativas
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Projeto desenvolvido em **React + Vite + TailwindCSS**, com objetivo de gerenciar rotinas/atividades de um usuário em um escritório contábil.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Funcionalidades
 
-## Expanding the ESLint configuration
+- Tela de **Login** (simulada, sem autenticação real por enquanto).  
+- **Dashboard** com lista de atividades cadastradas.  
+- Visualização de status das atividades (**Pendente** / **Concluída**).  
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+> Futuras atualizações poderão incluir criação, edição e exclusão de atividades, autenticação real e filtros avançados.
+
+---
+
+## Pré-requisitos
+
+- Node.js >= 18  
+- npm >= 9  
+
+---
+
+## Instalação
+
+1. Clone o repositório:
+```bash
+git clone https://github.com/Preedroos/sistema-contabil.git
+```
+
+2. Entre na pasta do projeto:
+```bash
+cd sistema-contabil
+```
+
+3. Instale as dependências:
+```bash
+npm install
+```
+
+## Executando o projeto
+
+Para iniciar o servidor de desenvolvimento:
+```bash
+npm run dev
+```
+
+O projeto estará disponível em: http://localhost:5173
