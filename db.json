@@ -1,0 +1,10 @@
+{
+  "usuarios": [
+    { "id": 1, "nome": "Pedro Cabral", "email": "pedro@email.com", "senha": "12345" },
+    { "id": 2, "nome": "Maria Silva", "email": "maria@email.com", "senha": "12345" }
+  ],
+  "tarefas": [
+    { "id": 1, "titulo": "Conferir relatórios", "descricao": "Verificar documentos contábeis", "status": "pendente", "prazo": "2025-08-30", "usuario_id": 1 },
+    { "id": 2, "titulo": "Enviar guias de impostos", "descricao": "Preparar e enviar as guias", "status": "em andamento", "prazo": "2025-09-05", "usuario_id": 2 }
+  ]
+}
