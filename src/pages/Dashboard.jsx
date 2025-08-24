@@ -1,67 +1,94 @@
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from 'react';
 
-function Dashboard() {
-  const [tarefas, setTarefas] = useState([]);
-  const [usuarios, setUsuarios] = useState([]);
+function Dashboard({ user }) {
+  const [activities, setActivities] = useState([]);
+  const [newTitle, setNewTitle] = useState('');
 
-  // Buscar dados do json-server
+  const fetchActivities = async () => {
+    const response = await fetch(`http://localhost:3001/atividades?usuario_id=${user.id}`);
+    const data = await response.json();
+    setActivities(data);
+  };
+
   useEffect(() => {
-    fetch("http://localhost:3001/tarefas")
-      .then(res => res.json())
-      .then(data => setTarefas(data));
-
-    fetch("http://localhost:3001/usuarios")
-      .then(res => res.json())
-      .then(data => setUsuarios(data));
+    fetchActivities();
   }, []);
 
-  // Função para pegar nome do usuário responsável
-  const getUsuarioNome = (id) => {
-    const usuario = usuarios.find(u => u.id === id);
-    return usuario ? usuario.nome : "Não atribuído";
+  const addActivity = async () => {
+    if (!newTitle) return;
+    await fetch('http://localhost:3001/atividades', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ usuario_id: user.id, titulo: newTitle }),
+    });
+    setNewTitle('');
+    fetchActivities();
+  };
+
+  // Atualizar status da atividade
+  const toggleStatus = async (id, currentStatus) => {
+    const newStatus = currentStatus === 'Pendente' ? 'Concluída' : 'Pendente';
+    await fetch(`http://localhost:3001/atividades/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ titulo: activities.find(a => a.id === id).titulo, status: newStatus }),
+    });
+    fetchActivities();
+  };
+
+  // Excluir atividade
+  const deleteActivity = async (id) => {
+    await fetch(`http://localhost:3001/atividades/${id}`, { method: 'DELETE' });
+    fetchActivities();
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <h1 className="text-3xl font-bold text-blue-600 mb-6">
-        Dashboard de Tarefas
-      </h1>
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center p-6">
+      <h1 className="text-3xl font-bold mb-6">Minhas Atividades</h1>
 
-      <div className="bg-white shadow-md rounded-lg overflow-hidden">
-        <table className="w-full text-left border-collapse">
-          <thead className="bg-blue-500 text-white">
-            <tr>
-              <th className="p-3">Título</th>
-              <th className="p-3">Descrição</th>
-              <th className="p-3">Status</th>
-              <th className="p-3">Prazo</th>
-              <th className="p-3">Responsável</th>
-            </tr>
-          </thead>
-          <tbody>
-            {tarefas.map((tarefa) => (
-              <tr key={tarefa.id} className="border-b hover:bg-gray-50">
-                <td className="p-3">{tarefa.titulo}</td>
-                <td className="p-3">{tarefa.descricao}</td>
-                <td className="p-3">
-                  <span
-                    className={`px-2 py-1 rounded text-white ${
-                      tarefa.status === "pendente"
-                        ? "bg-red-500"
-                        : tarefa.status === "em andamento"
-                        ? "bg-yellow-500"
-                        : "bg-green-500"
-                    }`}
-                  >
-                    {tarefa.status}
-                  </span>
-                </td>
-                <td className="p-3">{tarefa.prazo}</td>
-                <td className="p-3">{getUsuarioNome(tarefa.usuario_id)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="flex mb-4 gap-2 w-full max-w-md">
+        <input
+          type="text"
+          placeholder="Nova atividade"
+          value={newTitle}
+          onChange={(e) => setNewTitle(e.target.value)}
+          className="flex-1 border p-2 rounded"
+        />
+        <button
+          onClick={addActivity}
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        >
+          Adicionar
+        </button>
+      </div>
+
+      <div className="grid gap-4 w-full max-w-md">
+        {activities.map((activity) => (
+          <div
+            key={activity.id}
+            className="bg-white p-4 rounded shadow flex justify-between items-center"
+          >
+            <span>{activity.titulo}</span>
+            <div className="flex gap-2">
+              <button
+                onClick={() => toggleStatus(activity.id, activity.status)}
+                className={`px-2 py-1 rounded text-sm font-semibold ${
+                  activity.status === 'Concluída'
+                    ? 'bg-green-200 text-green-800'
+                    : 'bg-yellow-200 text-yellow-800'
+                }`}
+              >
+                {activity.status}
+              </button>
+              <button
+                onClick={() => deleteActivity(activity.id)}
+                className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 text-sm"
+              >
+                Excluir
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
