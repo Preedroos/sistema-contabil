@@ -1,16 +1,21 @@
 # Sistema de Rotinas Administrativas
 
-Projeto desenvolvido em **React + Vite + TailwindCSS**, com objetivo de gerenciar rotinas/atividades de um usuário em um escritório contábil.
+Este é um sistema web desenvolvido em **React + Vite + TailwindCSS**, com backend em **Node.js + SQLite**, para gerenciar rotinas e atividades de usuários em um escritório contábil.
+
+O sistema permite:
+
+- Cadastro de usuários.  
+- Login de usuários existentes.  
+- Criação, listagem, atualização e exclusão de atividades, associadas a cada usuário.  
+- Cada usuário visualiza apenas suas próprias atividades.  
 
 ---
 
-## Funcionalidades
+## Tecnologias utilizadas
 
-- Tela de **Login** (simulada, sem autenticação real por enquanto).  
-- **Dashboard** com lista de atividades cadastradas.  
-- Visualização de status das atividades (**Pendente** / **Concluída**).  
-
-> Futuras atualizações poderão incluir criação, edição e exclusão de atividades, autenticação real e filtros avançados.
+- **Frontend:** React, Vite, TailwindCSS  
+- **Backend:** Node.js, Express  
+- **Banco de dados:** SQLite  
 
 ---
 
@@ -24,25 +29,55 @@ Projeto desenvolvido em **React + Vite + TailwindCSS**, com objetivo de gerencia
 ## Instalação
 
 1. Clone o repositório:
+
 ```bash
 git clone https://github.com/Preedroos/sistema-contabil.git
-```
-
-2. Entre na pasta do projeto:
-```bash
 cd sistema-contabil
 ```
 
-3. Instale as dependências:
+2. Instale as dependências do frontend:
 ```bash
 npm install
 ```
 
 ## Executando o projeto
 
-Para iniciar o servidor de desenvolvimento:
+1. Rodar o backend:
+
+```bash
+node server
+```
+
+O backend estará disponível em: http://localhost:3001
+
+Certifique-se de que o arquivo database.db esteja criado pelo backend (ele será gerado automaticamente na primeira execução).
+
+2. Rodar o frontend:
+
 ```bash
 npm run dev
 ```
 
-O projeto estará disponível em: http://localhost:5173
+O frontend estará disponível em: http://localhost:5173
+
+## Uso do sistema
+
+1. Abra o navegador e acesse http://localhost:5173.
+
+2. Na tela de login:
+
+    * Para usuários existentes, digite o email e clique em Entrar.
+
+    * Para novos usuários, clique em Criar uma conta, preencha nome e email e clique em Cadastrar.
+
+3. Após o login, você será direcionado ao Dashboard, onde poderá:
+
+    * Visualizar suas atividades.
+
+    * Adicionar novas atividades.
+
+    * Alterar o status de uma atividade (Pendente / Concluída).
+
+    * Excluir atividades.
+
+Cada usuário só verá suas próprias atividades no sistema.
